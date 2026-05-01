@@ -66,8 +66,8 @@ df["R_est"] = df["dV"] / df["dI"]
 
 R_measured = df["R_est"].replace([np.inf, -np.inf], np.nan).dropna().median()
 
-R_new = 0.01
-SOH_res = R_new / R_measured if R_measured > 0 else np.nan
+R_new_ohms = 0.01
+SOH_res = R_new_ohms / R_measured if R_measured > 0 else np.nan
 print(f"Median estimated resistance: {R_measured:.5f} Ω")
 print(f"Estimated SOH (resistance-based): {SOH_res:.3f}")
 

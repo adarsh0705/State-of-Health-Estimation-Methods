@@ -24,7 +24,7 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 
 bms_folder = DATA_DIR / "bms"  # folder with BMS csv files
-soh_curve_file = DATA_DIR / "battery_soh_reference.csv"  # your experimental SOH curve
+soh_curve_file = DATA_DIR / "battery SOH reference.csv"  # your experimental SOH curve
 output_file = OUTPUT_DIR / "training_dataset.csv"  # final ML-ready dataset
 
 # -------------------------------

@@ -28,7 +28,7 @@ data/
   Place input datasets here.
   - CAN_Data_Dump_For_PINV502949_30-Aug_15_03_48.csv
   - CAN_Data_Dump_For_PINV502949_30-Aug_15_08_23.csv
-  - battery_soh_reference.csv
+  - battery SOH reference.csv
   - bms/ (folder with BMS CSV files for ML scripts)
 
 outputs/

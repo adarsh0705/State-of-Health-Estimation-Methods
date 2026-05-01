@@ -17,7 +17,7 @@ OUTPUT_DIR = ROOT_DIR / "outputs"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 bms_folder = DATA_DIR / "bms"
-soh_curve_file = DATA_DIR / "battery_soh_reference.csv"
+soh_curve_file = DATA_DIR / "battery SOH reference.csv"
 output_file = OUTPUT_DIR / "training_dataset_1.csv"
 
 # -------------------------------

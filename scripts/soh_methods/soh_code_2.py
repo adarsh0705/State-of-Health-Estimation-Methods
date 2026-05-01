@@ -39,7 +39,7 @@ df["dI"] = df["current( A )"].diff()
 df["R_est"] = df["dV"] / df["dI"]
 
 V_ref = 3.7      
-R_new = 0.25    
+R_new_ohms = 0.25    
 
 print("\nEstimating SOH per day...")
 
@@ -68,7 +68,7 @@ for day in sorted(df["day"].unique()):
     SOH_volt = V_obs / V_ref if V_obs > 0 else np.nan
     
     R_measured = chunk["R_est"].replace([np.inf, -np.inf], np.nan).dropna().median()
-    SOH_res = R_new / R_measured if (R_measured and R_measured > 0) else np.nan
+    SOH_res = R_new_ohms / R_measured if (R_measured and R_measured > 0) else np.nan
     
     SOH_final = np.nanmean([w1*SOH_cap, w2*SOH_volt, w3*SOH_res])
     
