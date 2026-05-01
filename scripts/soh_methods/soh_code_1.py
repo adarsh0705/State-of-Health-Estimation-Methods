@@ -1,9 +1,13 @@
-import pandas as pd
-import numpy as np
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 print("Loading dataset...")
-file_path = "CAN_Data_Dump_For_PINV502949_30-Aug_15_08_23.csv"
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = ROOT_DIR / "data"
+file_path = DATA_DIR / "CAN_Data_Dump_For_PINV502949_30-Aug_15_08_23.csv"
 df = pd.read_csv(file_path)
 
 print("Columns available:", df.columns.tolist())

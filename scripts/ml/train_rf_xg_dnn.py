@@ -1,7 +1,9 @@
-import os
-import pandas as pd
-import numpy as np
 from glob import glob
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
@@ -10,14 +12,20 @@ from sklearn.preprocessing import StandardScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import Adam
-import matplotlib.pyplot as plt
 
 # -------------------------------
 # USER SETTINGS
 # -------------------------------
-bms_folder = r"C:\Users\DELL\Desktop\DATA 6_10_25\New folder"  # folder with BMS csv files
-soh_curve_file = "battery SOH reference.csv"                   # your experimental SOH curve
-output_file = "training_dataset.csv"                           # final ML-ready dataset
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = ROOT_DIR / "data"
+OUTPUT_DIR = ROOT_DIR / "outputs"
+PLOTS_DIR = OUTPUT_DIR / "plots"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+PLOTS_DIR.mkdir(parents=True, exist_ok=True)
+
+bms_folder = DATA_DIR / "bms"  # folder with BMS csv files
+soh_curve_file = DATA_DIR / "battery_soh_reference.csv"  # your experimental SOH curve
+output_file = OUTPUT_DIR / "training_dataset.csv"  # final ML-ready dataset
 
 # -------------------------------
 # STEP 1: Load experimental SOH curve
@@ -102,7 +110,7 @@ def process_bms_file(file_path, battery_id):
 # -------------------------------
 # STEP 3: Process all BMS CSVs
 # -------------------------------
-all_files = glob(os.path.join(bms_folder, "*.csv"))
+all_files = glob(str(bms_folder / "*.csv"))
 all_data = []
 for i, file in enumerate(all_files):
     print(f"Processing {file} ...")
@@ -209,7 +217,7 @@ def plot_predictions(y_true, y_pred, model_name):
     plt.title(f"{model_name}: Actual vs Predicted SOH")
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(f"{model_name}_soh_plot.png", dpi=150)
+    plt.savefig(PLOTS_DIR / f"{model_name}_soh_plot.png", dpi=150)
     plt.show()
 
 plot_predictions(y_test, y_pred_rf, "RandomForest")
