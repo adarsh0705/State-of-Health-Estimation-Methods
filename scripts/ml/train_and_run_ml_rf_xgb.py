@@ -1,18 +1,24 @@
-import os
-import pandas as pd
 from glob import glob
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-import numpy as np
 
 # -------------------------------
 # USER SETTINGS
 # -------------------------------
-bms_folder = r"C:\Users\DELL\Desktop\ML TRAIN_RUN\New folder"
-soh_curve_file = "battery SOH reference.csv"
-output_file = "training_dataset.csv"
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = ROOT_DIR / "data"
+OUTPUT_DIR = ROOT_DIR / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+bms_folder = DATA_DIR / "bms"
+soh_curve_file = DATA_DIR / "battery SOH reference.csv"
+output_file = OUTPUT_DIR / "training_dataset.csv"
 
 # -------------------------------
 # STEP 1: Load experimental SOH curve
@@ -98,7 +104,7 @@ def process_bms_file(file_path, battery_id):
 # -------------------------------
 # STEP 3: Process all BMS CSVs in folder
 # -------------------------------
-all_files = glob(os.path.join(bms_folder, "*.csv"))
+all_files = glob(str(bms_folder / "*.csv"))
 all_data = []
 
 for i, file in enumerate(all_files):

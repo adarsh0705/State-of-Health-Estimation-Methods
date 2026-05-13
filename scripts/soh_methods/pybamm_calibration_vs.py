@@ -13,20 +13,23 @@ Requirements (install these in VS terminal):
     pip install pybamm numpy scipy pandas matplotlib
 """
 
-import os
 import json
+from pathlib import Path
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from scipy.optimize import least_squares
 
 # ===== USER SETTINGS =====
-INPUT_CSV = r"CAN_Data_Dump_For_PINV502949_30-Aug_15_03_48.csv"   # change path
-OUTPUT_DIR = r"C:\Users\DELL\Desktop\Fresh Start"       # results folder
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = ROOT_DIR / "data"
+OUTPUT_DIR = ROOT_DIR / "outputs" / "pybamm_calibration"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+INPUT_CSV = DATA_DIR / "CAN_Data_Dump_For_PINV502949_30-Aug_15_03_48.csv"   # change path
 PARAM_SET = "LGM50_Gravimetric"   # PyBaMM chemistry set
 # =========================
-
-os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # --------------------------
 # Load data
@@ -107,14 +110,14 @@ df_out = pd.DataFrame({
     "V_fit_V": Vfit,
     "residual_V": Vfit - V
 })
-df_out.to_csv(os.path.join(OUTPUT_DIR, "fit_trace.csv"), index=False)
+df_out.to_csv(OUTPUT_DIR / "fit_trace.csv", index=False)
 
 results = {
     "R_series_Ohm": float(R_series_fit),
     "success": bool(res.success),
     "message": res.message
 }
-with open(os.path.join(OUTPUT_DIR, "fitted_params.json"), "w") as f:
+with open(OUTPUT_DIR / "fitted_params.json", "w") as f:
     json.dump(results, f, indent=2)
 
 # --------------------------
@@ -126,7 +129,7 @@ plt.plot(t, Vfit, label=f"Fitted V (R={R_series_fit:.4f} Ω)")
 plt.xlabel("Time [s]"); plt.ylabel("Voltage [V]")
 plt.legend(); plt.grid(True)
 plt.tight_layout()
-plt.savefig(os.path.join(OUTPUT_DIR, "voltage_fit.png"), dpi=150)
+plt.savefig(OUTPUT_DIR / "voltage_fit.png", dpi=150)
 plt.show()
 
 plt.figure(figsize=(8,3))
@@ -135,7 +138,7 @@ plt.xlabel("Time [s]"); plt.ylabel("Residual (V)")
 plt.title("Residuals")
 plt.grid(True)
 plt.tight_layout()
-plt.savefig(os.path.join(OUTPUT_DIR, "residuals.png"), dpi=150)
+plt.savefig(OUTPUT_DIR / "residuals.png", dpi=150)
 plt.show()
 
 print("All outputs saved to:", OUTPUT_DIR)

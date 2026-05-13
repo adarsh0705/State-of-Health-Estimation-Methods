@@ -1,0 +1,40 @@
+State-of-Health Estimation Methods
+==================================
+
+This repository contains standalone Python scripts for estimating battery State of Health (SOH)
+and training machine-learning models using BMS data. The files are organized to make the
+workflow and assets easy to find.
+
+Repository layout
+-----------------
+assets/plots/
+  Pre-generated result plots and figures.
+
+scripts/soh_methods/
+  SOH estimation approaches and pipelines:
+  - soh_code_1.py
+  - soh_code_2.py
+  - soh_code_3.py
+  - soh_pipeline.py
+  - pybamm_calibration_vs.py
+
+scripts/ml/
+  ML training and evaluation scripts:
+  - train_and_run_ml_rf_xgb.py
+  - train_plus_ml.py
+  - train_rf_xg_dnn.py
+
+data/
+  Place input datasets here.
+  - CAN_Data_Dump_For_PINV502949_30-Aug_15_03_48.csv
+  - CAN_Data_Dump_For_PINV502949_30-Aug_15_08_23.csv
+  - battery SOH reference.csv
+  - bms/ (folder with BMS CSV files for ML scripts)
+
+outputs/
+  Generated outputs (training datasets, model plots, and calibration artifacts).
+
+Usage notes
+-----------
+- Run scripts from any working directory; they resolve paths relative to the repo root.
+- Update the input file names in each script if your datasets use different names.

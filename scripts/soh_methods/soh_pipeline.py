@@ -1,12 +1,19 @@
-import pandas as pd
-import numpy as np
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
 # ================================
 # 1. Load & Inspect Data
 # ================================
 print("Loading dataset...")
-file_path = "CAN_Data_Dump_For_PINV502949_30-Aug_15_03_48.csv"
+ROOT_DIR = Path(__file__).resolve().parents[2]
+DATA_DIR = ROOT_DIR / "data"
+OUTPUT_DIR = ROOT_DIR / "outputs"
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+file_path = DATA_DIR / "CAN_Data_Dump_For_PINV502949_30-Aug_15_03_48.csv"
 df = pd.read_csv(file_path)
 
 print("Columns available:", df.columns.tolist())
@@ -66,7 +73,7 @@ print("SOH calculation complete for all rows.")
 # ================================
 # 4. Save to Excel
 # ================================
-output_path = "soh_estimates_1.xlsx"
+output_path = OUTPUT_DIR / "soh_estimates_1.xlsx"
 df.to_excel(output_path, index=False)
 print("Updated dataset with SOH saved to:", output_path)
 
